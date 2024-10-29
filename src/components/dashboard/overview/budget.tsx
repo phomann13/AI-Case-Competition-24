@@ -20,6 +20,11 @@ export function Budget({ diff, trend, sx, value }: BudgetProps): React.JSX.Eleme
   const TrendIcon = trend === 'up' ? ArrowUpIcon : ArrowDownIcon;
   const trendColor = trend === 'up' ? 'var(--mui-palette-success-main)' : 'var(--mui-palette-error-main)';
 
+  /*
+    How many applicants I have
+    Open Job Postings
+    
+  */
   return (
     <Card sx={sx}>
       <CardContent>
