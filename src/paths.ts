@@ -7,7 +7,9 @@ export const paths = {
     applicants: '/dashboard/applicants',
     integrations: '/dashboard/integrations',
     settings: '/dashboard/settings',
-    job_postings: '/dashboard/jobPostings'
+    jobPostings: '/dashboard/jobPostings',
+    recruitment: '/dashboard/recruitment',
+    applicantProfile: (id: string) => `/dashboard/applicants/${id}`, // Dynamic path for each applicant profile
   },
   errors: { notFound: '/errors/not-found' },
 } as const;

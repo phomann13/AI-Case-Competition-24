@@ -17,6 +17,8 @@ import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
 
 import { useSelection } from '@/hooks/use-selection';
+import { Button } from '@mui/material';
+import Link from 'next/link';
 
 function noop(): void {
   // do nothing
@@ -78,6 +80,7 @@ export function CustomersTable({
               <TableCell>Location</TableCell>
               <TableCell>Phone</TableCell>
               <TableCell>Signed Up</TableCell>
+              <TableCell>View Applicant</TableCell> 
             </TableRow>
           </TableHead>
           <TableBody>
@@ -110,6 +113,11 @@ export function CustomersTable({
                   </TableCell>
                   <TableCell>{row.phone}</TableCell>
                   <TableCell>{dayjs(row.createdAt).format('MMM D, YYYY')}</TableCell>
+                  <TableCell>
+                    <Link href={`applicants/${row.id}`}>
+                      <Button variant="outlined">View</Button> 
+                    </Link>
+                  </TableCell>
                 </TableRow>
               );
             })}
