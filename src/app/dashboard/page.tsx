@@ -5,8 +5,8 @@ import dayjs from 'dayjs';
 
 import { config } from '@/config';
 import { Budget } from '@/components/dashboard/overview/budget';
-import { LatestOrders } from '@/components/dashboard/overview/latest-orders';
-import { LatestProducts } from '@/components/dashboard/overview/latest-products';
+import { LatestOrders } from '@/components/dashboard/overview/latest-applicants';
+import { LatestProducts } from '@/components/dashboard/overview/job-postings';
 import { Sales } from '@/components/dashboard/overview/Viewers';
 import { TasksProgress } from '@/components/dashboard/overview/tasks-progress';
 import { TotalCustomers } from '@/components/dashboard/overview/applicants';
@@ -46,34 +46,39 @@ export default function Page(): React.JSX.Element {
         <LatestProducts
           products={[
             {
-              id: 'PRD-005',
-              name: 'Soja & Co. Eucalyptus',
+              id: 'JP-005',
+              name: 'Software Engineer 1',
               image: '/assets/product-5.png',
               updatedAt: dayjs().subtract(18, 'minutes').subtract(5, 'hour').toDate(),
+              status: 'Open'
             },
             {
-              id: 'PRD-004',
-              name: 'Necessaire Body Lotion',
+              id: 'JP-004',
+              name: 'Software Engineer 2',
               image: '/assets/product-4.png',
               updatedAt: dayjs().subtract(41, 'minutes').subtract(3, 'hour').toDate(),
+              status: 'Open'
             },
             {
-              id: 'PRD-003',
-              name: 'Ritual of Sakura',
+              id: 'JP-003',
+              name: 'Network Engineer',
               image: '/assets/product-3.png',
               updatedAt: dayjs().subtract(5, 'minutes').subtract(3, 'hour').toDate(),
+              status: 'Open'
             },
             {
-              id: 'PRD-002',
-              name: 'Lancome Rouge',
+              id: 'JP-002',
+              name: 'Hardware Engineer',
               image: '/assets/product-2.png',
               updatedAt: dayjs().subtract(23, 'minutes').subtract(2, 'hour').toDate(),
+              status: 'Open'
             },
             {
-              id: 'PRD-001',
-              name: 'Erbology Aloe Vera',
+              id: 'JP-001',
+              name: 'Product Manager',
               image: '/assets/product-1.png',
               updatedAt: dayjs().subtract(10, 'minutes').toDate(),
+              status: 'Closed'
             },
           ]}
           sx={{ height: '100%' }}
@@ -83,46 +88,53 @@ export default function Page(): React.JSX.Element {
         <LatestOrders
           orders={[
             {
-              id: 'ORD-007',
+              id: 'APP-007',
               customer: { name: 'Ekaterina Tankova' },
-              amount: 30.5,
-              status: 'pending',
+              amount: 0,
+              status: 'scoring',
               createdAt: dayjs().subtract(10, 'minutes').toDate(),
             },
             {
-              id: 'ORD-006',
+              id: 'APP-006',
               customer: { name: 'Cao Yu' },
-              amount: 25.1,
-              status: 'delivered',
-              createdAt: dayjs().subtract(10, 'minutes').toDate(),
+              amount: 0,
+              status: 'scoring',
+              createdAt: dayjs().subtract(1000, 'minutes').toDate(),
             },
             {
-              id: 'ORD-004',
+              id: 'APP-005',
               customer: { name: 'Alexa Richardson' },
-              amount: 10.99,
-              status: 'refunded',
-              createdAt: dayjs().subtract(10, 'minutes').toDate(),
+              amount: 96.5,
+              status: 'scored',
+              createdAt: dayjs().subtract(1456, 'minutes').toDate(),
             },
             {
-              id: 'ORD-003',
+              id: 'APP-004',
               customer: { name: 'Anje Keizer' },
-              amount: 96.43,
-              status: 'pending',
-              createdAt: dayjs().subtract(10, 'minutes').toDate(),
+              amount: 82.1,
+              status: 'scored',
+              createdAt: dayjs().subtract(5738, 'minutes').toDate(),
             },
             {
-              id: 'ORD-002',
+              id: 'APP-003',
               customer: { name: 'Clarke Gillebert' },
-              amount: 32.54,
-              status: 'delivered',
-              createdAt: dayjs().subtract(10, 'minutes').toDate(),
+              amount: 98,
+              status: 'awaiting',
+              createdAt: dayjs().subtract(6000, 'minutes').toDate(),
             },
             {
-              id: 'ORD-001',
+              id: 'APP-002',
               customer: { name: 'Adam Denisov' },
-              amount: 16.76,
-              status: 'delivered',
-              createdAt: dayjs().subtract(10, 'minutes').toDate(),
+              amount: 99,
+              status: 'offered',
+              createdAt: dayjs().subtract(6000, 'minutes').toDate(),
+            },
+            {
+              id: 'APP-001',
+              customer: { name: 'Sean Li' },
+              amount: 99,
+              status: 'sponsored',
+              createdAt: dayjs().subtract(6500, 'minutes').toDate(),
             },
           ]}
           sx={{ height: '100%' }}

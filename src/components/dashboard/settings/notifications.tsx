@@ -30,8 +30,10 @@ export function Notifications(): React.JSX.Element {
               <Stack spacing={1}>
                 <Typography variant="h6">Email</Typography>
                 <FormGroup>
-                  <FormControlLabel control={<Checkbox defaultChecked />} label="Product updates" />
-                  <FormControlLabel control={<Checkbox />} label="Security updates" />
+                <FormControlLabel control={<Checkbox />} label="Questions and Answers" />
+                  <FormControlLabel control={<Checkbox defaultChecked />} label="New Applications" />
+                  <FormControlLabel control={<Checkbox defaultChecked />} label="Accepted Applications" />
+                  <FormControlLabel control={<Checkbox />} label="Sponsorship Updates" />
                 </FormGroup>
               </Stack>
             </Grid>
@@ -40,7 +42,7 @@ export function Notifications(): React.JSX.Element {
                 <Typography variant="h6">Phone</Typography>
                 <FormGroup>
                   <FormControlLabel control={<Checkbox defaultChecked />} label="Email" />
-                  <FormControlLabel control={<Checkbox />} label="Security updates" />
+                  <FormControlLabel control={<Checkbox />} label="SMS" />
                 </FormGroup>
               </Stack>
             </Grid>

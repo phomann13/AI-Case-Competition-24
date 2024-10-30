@@ -16,16 +16,20 @@ import { ArrowRight as ArrowRightIcon } from '@phosphor-icons/react/dist/ssr/Arr
 import dayjs from 'dayjs';
 
 const statusMap = {
-  pending: { label: 'Pending', color: 'warning' },
-  delivered: { label: 'Delivered', color: 'success' },
-  refunded: { label: 'Refunded', color: 'error' },
+  scoring: { label: 'Scoring', color: 'default' },
+  scored: { label: 'Scored', color: 'secondary' },
+  awaiting: { label: 'Interview Scheduled', color: 'primary' },
+  offered: { label: 'Position Offered', color: 'info' },
+  sponsored: { label: 'Sponsored', color: 'success' },
+  // /"warning" | "primary" | "success" | "default" | "secondary" | "error" | "info",
+
 } as const;
 
 export interface Order {
   id: string;
   customer: { name: string };
   amount: number;
-  status: 'pending' | 'delivered' | 'refunded';
+  status: 'scoring' | 'scored' | 'awaiting' | 'offered' | 'sponsored';
   createdAt: Date;
 }
 
@@ -37,14 +41,14 @@ export interface LatestOrdersProps {
 export function LatestOrders({ orders = [], sx }: LatestOrdersProps): React.JSX.Element {
   return (
     <Card sx={sx}>
-      <CardHeader title="Latest orders" />
+      <CardHeader title="Latest Applicants" />
       <Divider />
       <Box sx={{ overflowX: 'auto' }}>
         <Table sx={{ minWidth: 800 }}>
           <TableHead>
             <TableRow>
-              <TableCell>Order</TableCell>
-              <TableCell>Customer</TableCell>
+              <TableCell>Applicant ID</TableCell>
+              <TableCell>Applicant</TableCell>
               <TableCell sortDirection="desc">Date</TableCell>
               <TableCell>Status</TableCell>
             </TableRow>

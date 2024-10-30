@@ -14,12 +14,14 @@ import type { SxProps } from '@mui/material/styles';
 import { ArrowRight as ArrowRightIcon } from '@phosphor-icons/react/dist/ssr/ArrowRight';
 import { DotsThreeVertical as DotsThreeVerticalIcon } from '@phosphor-icons/react/dist/ssr/DotsThreeVertical';
 import dayjs from 'dayjs';
+import { Stack } from '@mui/system';
 
 export interface Product {
   id: string;
   image: string;
   name: string;
   updatedAt: Date;
+  status: string;
 }
 
 export interface LatestProductsProps {
@@ -30,7 +32,7 @@ export interface LatestProductsProps {
 export function LatestProducts({ products = [], sx }: LatestProductsProps): React.JSX.Element {
   return (
     <Card sx={sx}>
-      <CardHeader title="Latest products" />
+      <CardHeader title="Job Postings" />
       <Divider />
       <List>
         {products.map((product, index) => (
@@ -49,12 +51,22 @@ export function LatestProducts({ products = [], sx }: LatestProductsProps): Reac
                 />
               )}
             </ListItemAvatar>
+            <Stack spacing={1}>
             <ListItemText
+              sx ={{'m':0, 'p':0}}
+              primary={`Status: ${product.status}`}
+              primaryTypographyProps={{ variant: 'subtitle1', color: product.status == 'Open' ? 'success' : 'error' }}
+              
+            />
+            <ListItemText
+             sx ={{'m':0, 'p':0}}
               primary={product.name}
               primaryTypographyProps={{ variant: 'subtitle1' }}
               secondary={`Updated ${dayjs(product.updatedAt).format('MMM D, YYYY')}`}
               secondaryTypographyProps={{ variant: 'body2' }}
+              
             />
+            </Stack>
             <IconButton edge="end">
               <DotsThreeVerticalIcon weight="bold" />
             </IconButton>
