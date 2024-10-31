@@ -85,20 +85,36 @@ const InterviewsPage = () => {
     return (
         <Container maxWidth="sm">
             <Typography variant="h4" gutterBottom>
-                Interview Preparation
+                Interview Summarization
             </Typography>
             <Paper elevation={3} style={{ padding: '20px' }}>
                 <Typography variant="h7" gutterBottom>
                     Upload Resume
                 </Typography>
-                <FormControl fullWidth margin="normal">
-                    <Input
-                        id="resume-upload"
-                        type="file"
-                        onChange={handleResumeChange}
-                        inputProps={{ accept: '.pdf' }}
-                    />
-                </FormControl>
+            <FormControl fullWidth margin="normal">
+                <input
+                    accept=".pdf"
+                    id="resume-upload"
+                    type="file"
+                    style={{ display: 'none' }}
+                    onChange={handleResumeChange}
+                />
+                <label htmlFor="resume-upload">
+                    <Button 
+                        variant="contained" 
+                        color="primary" 
+                        component="span" // Allows the button to trigger file input
+                        fullWidth
+                    >
+                        Choose File
+                    </Button>
+                </label>
+            </FormControl>
+            {resume && (
+                <Typography variant="body2" color="textSecondary" style={{ marginTop: '10px' }}>
+                    Selected file: {resume.name}
+                </Typography>
+            )}
                 <TextField
                     fullWidth
                     multiline
@@ -142,18 +158,35 @@ const InterviewsPage = () => {
                     Add Interview Question
                 </Button>
                 <br></br>
-                <Typography variant="h7" gutterBottom>
+                <Typography variant="subtitle1" gutterBottom>
                     Upload Interview Audio
                 </Typography>
                 <FormControl fullWidth margin="normal">
-                    <Input
+                    <input
+                        accept=".wav,.mp3,.m4a"
                         id="interview-upload"
                         type="file"
+                        style={{ display: 'none' }}
                         onChange={handleAudioChange}
                         multiple
-                        inputProps={{ accept: '.wav,.mp3,.m4a' }}
                     />
+                    <label htmlFor="interview-upload">
+                        <Button 
+                            variant="contained" 
+                            color="primary" 
+                            component="span"
+                            fullWidth
+                        >
+                            Choose Audio Files
+                        </Button>
+                    </label>
                 </FormControl>
+                {audioFiles.length > 0 && (
+                    <Typography variant="body2" color="textSecondary" style={{ marginTop: '10px' }}>
+                        Selected files: {audioFiles.map(file => file.name).join(', ')}
+                    </Typography>
+                )}
+
                 <Button variant="contained" color="primary" onClick={handleSubmit}>
                     Evaluate
                 </Button>

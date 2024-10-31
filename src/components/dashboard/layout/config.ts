@@ -10,6 +10,7 @@ export const navItems = [
   { key: 'recruitment', title: 'Recruitment', href: paths.dashboard.recruitment, icon: 'globe',visibleTo:'asha'},
   { key: 'myjobs', title: 'My Jobs', href: paths.dashboard.myjobs, icon: 'paper',visibleTo:'user' },
   { key: 'interviews', title: 'Interviews', href: paths.dashboard.interviews, icon: 'interviews',visibleTo:'asha' },
+  { key: 'uinterview', title: 'Interview', href: paths.dashboard.uinterview, icon: 'interviews',visibleTo:'user' },
   { key: 'predict', title: 'Predict', href: paths.dashboard.predict, icon: 'crosshair',visibleTo:'asha' },
   { key: 'faq', title: 'FAQ', href: paths.dashboard.faq, icon: 'question',visibleTo:'both'},
   { key: 'settings', title: 'Settings', href: paths.dashboard.settings, icon: 'gear-six',visibleTo:'both' },

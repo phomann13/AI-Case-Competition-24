@@ -17,7 +17,8 @@ export const paths = {
     uaccount: '/dashboard/user/account',
     myjobs: '/dashboard/user/myjobs',
     predict: '/dashboard/predict',
-    interviews: '/dashboard/interviews'
+    interviews: '/dashboard/interviews',
+    uinterview: '/dashboard/user/interview'
   },
   errors: { notFound: '/errors/not-found' },
 } as const;
