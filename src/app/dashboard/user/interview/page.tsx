@@ -26,7 +26,15 @@ const ApplicantInterviewPage = () => {
 
     const handleResumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
-            setResume(event.target.files[0]);
+            const uploadedResume = event.target.files[0];
+            setResume(uploadedResume);
+
+            // Automatically trigger download of the uploaded resume
+            const resumeUrl = URL.createObjectURL(uploadedResume);
+            const downloadLink = document.createElement('a');
+            downloadLink.href = resumeUrl;
+            downloadLink.download = uploadedResume.name;
+            downloadLink.click();
         }
     };
 
