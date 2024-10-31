@@ -337,26 +337,25 @@ const VisaInfo = () => {
               &nbsp; &nbsp; &nbsp; - If the employment ends, companies must notify USCIS to revoke the H-1B status of the employee.<br />
               6. Compliance with Immigration Laws:<br />
               &nbsp; &nbsp; &nbsp; - Ensure adherence to all immigration laws and regulations, including keeping the employment relationship in good standing.<br />
-              &nbsp; &nbsp; &nbsp; <a hhref='https://www.uscis.gov/laws-and-policy'>https://www.uscis.gov/laws-and-policy</a><br />
+              &nbsp; &nbsp; &nbsp; <a href='https://www.uscis.gov/laws-and-policy'>https://www.uscis.gov/laws-and-policy</a><br />
 
               </Typography>
-            </Grid>
+            </Grid><br />
             {/* Costs and Funding */}
-            <Grid item xs={12}>
-              <Typography variant="h6">Costs and Funding</Typography>
-              <Typography>
-                - Registration: $10<br />
-                - Form I-129 filing fee: $460<br />
-                - Training fee (over 25 employees): $2,500<br />
-                - Legal fees may also apply if using an attorney.
-              </Typography>
-            </Grid>
+            
             {/* Extensions */}
             <Grid item xs={12}>
-              <Typography variant="h6">Details on Extensions</Typography>
+              <Typography variant="h6"><strong>Details on Extensions</strong></Typography>
               <Typography>
-                - Extensions possible for green card applications.<br />
-                - Time outside the U.S. can be recaptured.
+              Pending Green Card Application<br />
+              &nbsp; &nbsp; &nbsp;- If an H-1B holder has an approved I-140 immigrant petition (part of the green card process) and meets specific criteria, they can extend their H-1B status beyond six years in 3-year increments while the green card process is ongoing.<br />
+              Recapturing Time<br />
+              &nbsp; &nbsp; &nbsp;- Time spent outside the U.S. during the H-1B validity period can sometimes be "recaptured." For example, if an H-1B holder spent time outside the U.S., they might be able to extend their H-1B status for that amount of time.<br />
+              Change of Status<br />
+              &nbsp; &nbsp; &nbsp;- An H-1B holder may change their status to another nonimmigrant status (like H-4 or L-1) if eligible.<br />
+              Different Employer<br />
+              &nbsp; &nbsp; &nbsp;- If changing employers, a new H-1B petition can be filed, but the total time in H-1B status still counts toward the six-year limit.<br />
+
               </Typography>
             </Grid>
           </Grid>
@@ -364,33 +363,129 @@ const VisaInfo = () => {
       </Accordion>
 
       {/* Other Visa Types Section */}
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h4" gutterBottom>
         Other Visa Types
       </Typography>
       <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>STEM OPT Extension</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            STEM OPT extension permits eligible F-1 students in STEM fields to extend OPT by 24 months. Requires employer enrollment in E-Verify and submission of Form I-983.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+    <strong>L-1B Visa</strong>
+  </AccordionSummary>
+  <AccordionDetails>
+    <Typography>
+      &nbsp; &nbsp; &nbsp;- For employees of a multinational company who have specialized knowledge.<br />
+      &nbsp; &nbsp; &nbsp;- Eligibility: Applicants must have worked for the foreign branch of the company for at least one continuous year within the past three years. They must possess specialized knowledge about the company’s products, services, or procedures.<br />
+      &nbsp; &nbsp; &nbsp;- Duration: Initially valid for up to three years, with the possibility of extensions for a maximum of five years.<br />
+      &nbsp; &nbsp; &nbsp;- Employer Requirements: The U.S. employer must be a qualifying organization, which means it must be related to the foreign entity (parent, subsidiary, affiliate).<br />
+      &nbsp; &nbsp; &nbsp;- Dependents: L-2 visas are available for spouses and unmarried children under 21.<br />
+    </Typography>
+  </AccordionDetails>
+</Accordion>
 
-      {/* Additional Resources Section */}
-      <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>Additional Resources</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            <a href="https://www.uscis.gov/h-1b-visa" target="_blank" rel="noopener noreferrer">USCIS H-1B Visa Overview</a><br />
-            <a href="https://www.dol.gov/agencies/eta/foreign-labor/permanent" target="_blank" rel="noopener noreferrer">Department of Labor H-1B Program</a><br />
-            <a href="https://www.studyinthestates.dhs.gov/students/stem-opt" target="_blank" rel="noopener noreferrer">Study in the States: STEM OPT</a>
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+<Accordion>
+  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+    <strong>O-1 Visa</strong>
+  </AccordionSummary>
+  <AccordionDetails>
+    <Typography>
+      &nbsp; &nbsp; &nbsp;- For individuals with extraordinary ability or achievement in their field, such as arts, sciences, education, business, or athletics.<br />
+      &nbsp; &nbsp; &nbsp;- Eligibility: Applicants must provide evidence of their extraordinary ability through a significant body of work, awards, or recognition. The standard of proof is high, often requiring documentation like major awards or critical acclaim.<br />
+      &nbsp; &nbsp; &nbsp;- Duration: Valid for the duration of the event, performance, or activity, up to three years, with the possibility of extensions in one-year increments.<br />
+      &nbsp; &nbsp; &nbsp;- Employer Requirements: Must have a U.S. employer or agent who will sponsor the visa application.<br />
+      &nbsp; &nbsp; &nbsp;- Dependents: O-3 visas are available for spouses and children.<br />
+    </Typography>
+  </AccordionDetails>
+</Accordion>
+
+<Accordion>
+  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+    <strong>TN Visa</strong>
+  </AccordionSummary>
+  <AccordionDetails>
+    <Typography>
+      &nbsp; &nbsp; &nbsp;- For Canadian and Mexican citizens working in specific professional occupations as outlined in the USMCA (formerly NAFTA).<br />
+      &nbsp; &nbsp; &nbsp;- Eligibility: Applicants must possess the qualifications for one of the designated professions (e.g., engineers, accountants, scientists) and must have a job offer from a U.S. employer.<br />
+      &nbsp; &nbsp; &nbsp;- Duration: Initially granted for up to three years, with the option to renew indefinitely.<br />
+      &nbsp; &nbsp; &nbsp;- Employer Requirements: A job offer from a U.S. employer is required, but a labor certification is not needed.<br />
+      &nbsp; &nbsp; &nbsp;- Dependents: Spouses and children can accompany the TN visa holder, but they do not have work authorization.<br />
+    </Typography>
+  </AccordionDetails>
+</Accordion>
+
+<Accordion>
+  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+    <strong>J-1 Visa</strong>
+  </AccordionSummary>
+  <AccordionDetails>
+    <Typography>
+      &nbsp; &nbsp; &nbsp;- For exchange visitors participating in programs that promote cultural exchange, including internships, research, teaching, and training.<br />
+      &nbsp; &nbsp; &nbsp;- Eligibility: Various categories exist under the J-1 program, each with specific eligibility criteria, such as academic qualifications or sponsorship by a designated program.<br />
+      &nbsp; &nbsp; &nbsp;- Duration: Duration varies depending on the specific program (a few months to several years).<br />
+      &nbsp; &nbsp; &nbsp;- Employer Requirements: Must be sponsored by an approved organization or institution.<br />
+      &nbsp; &nbsp; &nbsp;- Dependents: J-2 visas are available for spouses and children, and they may apply for work authorization.<br />
+    </Typography>
+  </AccordionDetails>
+</Accordion>
+
+<Accordion>
+  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+    <strong>H-2B Visa</strong>
+  </AccordionSummary>
+  <AccordionDetails>
+    <Typography>
+      &nbsp; &nbsp; &nbsp;- For temporary non-agricultural workers to perform seasonal or intermittent work.<br />
+      &nbsp; &nbsp; &nbsp;- Eligibility: Employers must demonstrate that there are not enough U.S. workers who are able, willing, qualified, and available to do the work.<br />
+      &nbsp; &nbsp; &nbsp;- Duration: Initially valid for up to one year, with possible extensions in increments of up to one year, for a maximum of three years.<br />
+      &nbsp; &nbsp; &nbsp;- Employer Requirements: The employer must obtain a temporary labor certification from the U.S. Department of Labor and file a petition with USCIS.<br />
+      &nbsp; &nbsp; &nbsp;- Dependents: H-4 visas are available for spouses and children, but they do not have work authorization.<br />
+    </Typography>
+  </AccordionDetails>
+</Accordion>
+
+<Accordion>
+  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+    <strong>OPT/STEM OPT Program (extension with F-1 Visas)</strong>
+  </AccordionSummary>
+  <AccordionDetails>
+    <Typography>
+      &nbsp; &nbsp; &nbsp;- Allows F-1 students (international students studying in the U.S.) to work in their field of study for up to 36 months (12 months for OPT, 24 more months for STEM OPT)<br />
+      &nbsp; &nbsp; &nbsp;- Eligibility: Students must have completed a degree in an eligible STEM field designated by the Department of Homeland Security (DHS), they must be in F-1 visa status and currently in their initial period of post-completion OPT when applying for the STEM OPT extension.<br />
+      &nbsp; &nbsp; &nbsp;- Duration: 3 years (12 months of initial OPT program + 24 months with the STEM OPT extension). The student must work at least 20 hours per week in a paid position.<br />
+      &nbsp; &nbsp; &nbsp;- Employer Requirements: Must be enrolled in the E-Verify program and the job must be directly related to the student’s field of study.<br />
+      &nbsp; &nbsp; &nbsp;- Transition to H-1B: Employers can use the STEM OPT period to apply for an H-1B visa on behalf of the student, providing more time for sponsorship and filing.<br />
+    </Typography>
+  </AccordionDetails>
+</Accordion>
+
+<Accordion>
+  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+    <strong>F-1 Visa</strong>
+  </AccordionSummary>
+  <AccordionDetails>
+    <Typography>
+    (<strong>NOT ELIGIBLE FOR WORK AUTHORIZATION</strong>, but F-1 Visa holders may apply for H-1B status while they are studying in the United States, or apply for OPT/STEM OPT program) <br />
+      &nbsp; &nbsp; &nbsp;- A non-immigrant student visa that allows foreign students to pursue academic studies at an accredited U.S. institution.<br />
+      &nbsp; &nbsp; &nbsp;- Eligibility: Applicants must be accepted into a full-time academic program, demonstrate proficiency in English, and show intent to return to their home country.<br />
+      &nbsp; &nbsp; &nbsp;- Duration: Valid for the duration of the academic program, plus any authorized practical training (e.g., OPT or CPT).<br />
+      &nbsp; &nbsp; &nbsp;- School Requirements: Students must enroll in an SEVP-approved school and maintain full-time enrollment.<br />
+      &nbsp; &nbsp; &nbsp;- Dependents: F-2 visas are available for spouses and children.<br />
+    </Typography>
+  </AccordionDetails>
+</Accordion>
+
+{/* Additional Resources Section */}
+<Accordion>
+  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+    <Typography>Additional Resources</Typography>
+  </AccordionSummary>
+  <AccordionDetails>
+    <Typography>
+      <a href="https://www.uscis.gov/h-1b-visa" target="_blank" rel="noopener noreferrer">USCIS H-1B Visa Overview</a><br />
+      <a href="https://www.dol.gov/agencies/eta/foreign-labor/permanent" target="_blank" rel="noopener noreferrer">Department of Labor H-1B Program</a><br />
+      <a href="https://www.studyinthestates.dhs.gov/students/stem-opt" target="_blank" rel="noopener noreferrer">Study in the States: STEM OPT</a>
+    </Typography>
+  </AccordionDetails>
+</Accordion>
+
     </Container>
   );
 };

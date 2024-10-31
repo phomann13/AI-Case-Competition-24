@@ -12,6 +12,7 @@ export const navItems = [
   { key: 'interviews', title: 'Interviews', href: paths.dashboard.interviews, icon: 'interviews',visibleTo:'asha' },
   { key: 'uinterview', title: 'Interview', href: paths.dashboard.uinterview, icon: 'interviews',visibleTo:'user' },
   { key: 'predict', title: 'Predict', href: paths.dashboard.predict, icon: 'crosshair',visibleTo:'asha' },
+  { key: 'pdfAssistant', title: 'PDF Assistant', href: paths.dashboard.summarizer, icon: 'scroll',visibleTo:'both' },
   { key: 'faq', title: 'FAQ', href: paths.dashboard.faq, icon: 'question',visibleTo:'both'},
   { key: 'settings', title: 'Settings', href: paths.dashboard.settings, icon: 'gear-six',visibleTo:'both' },
   { key: 'account', title: 'Account', href: paths.dashboard.account, icon: 'user',visibleTo:'asha' },

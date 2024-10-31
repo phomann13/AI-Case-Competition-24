@@ -8,3 +8,4 @@ sounddevice
 scipy 
 PyPDF2
 python-dotenv
+pycryptodome

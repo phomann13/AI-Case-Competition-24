@@ -6,9 +6,11 @@ from flask_cors import CORS
 import sklearn
 import openai
 import PyPDF2
-import os
+from PyPDF2 import PdfReader
+import os # This will print all environment variables
+
 from dotenv import load_dotenv
-load_dotenv(".env.local")
+load_dotenv("../.env.local")
 openai.api_key = os.getenv("OPENAI_API_KEY")
 app = Flask(__name__)
 CORS(app)
@@ -139,5 +141,117 @@ def evaluate():
         "resume_score": resume_score,
         "evaluations": evaluations
     })
+    
+sessions = {}
+
+
+def extract_text(pdf_file):
+    """Extract text from a PDF file."""
+    pdf_reader = PyPDF2.PdfReader(pdf_file)
+    text = ""
+    for page_num in range(len(pdf_reader.pages)):
+        text += pdf_reader.pages[page_num].extract_text()
+    return text
+
+
+def split_text_into_batches(text, max_length=1500):
+    """Splits the text into batches that do not exceed the max_length."""
+    words = text.split()
+    batches = []
+    current_batch = []
+
+    for word in words:
+        # Check if adding the next word exceeds the max length
+        if len(' '.join(current_batch + [word])) <= max_length:
+            current_batch.append(word)
+        else:
+            # If we exceed max length, store the current batch and start a new one
+            batches.append(' '.join(current_batch))
+            current_batch = [word]
+
+    # Add any remaining words as a final batch
+    if current_batch:
+        batches.append(' '.join(current_batch))
+
+    return batches
+
+def get_session_id(req):
+    """Retrieve session ID from request headers or generate a new one if not present."""
+    session_id = req.headers.get('session-id')
+    if not session_id:
+        session_id = str(uuid.uuid4())  # Generate a new session ID
+    return session_id
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+
+
+   
+chat_history = {}
+
+def extract_text_from_pdf(pdf_file):
+    text = ''
+    reader = PyPDF2.PdfReader(pdf_file)
+    for page in reader.pages:
+        text += page.extract_text() + '\n'
+    return text
+
+@app.route('/api/pdfAssistant', methods=['POST'])
+def pdf_assistant():
+    session_id = request.headers.get('session-id')
+    
+    # Initialize chat history if session_id is new
+    if session_id not in chat_history:
+        chat_history[session_id] = []
+
+    pdf_file = request.files.get('pdfFile')
+    prompt = request.form.get('prompt')
+
+    if pdf_file and prompt:
+        pdf_text = extract_text_from_pdf(pdf_file)
+        response_text = ''
+        # Split text into batches if too large
+        text_batches = [pdf_text[i:i + 2048] for i in range(0, len(pdf_text), 2048)]
+
+        for batch in text_batches:
+            completion = openai.ChatCompletion.create(
+                model='gpt-3.5-turbo',
+                messages=[
+                    {"role": "user", "content": prompt},
+                    {"role": "user", "content": batch}
+                ]
+            )
+            response_text += completion.choices[0].message.content + '\n'
+
+        # Store the initial prompt and response in chat history
+        chat_history[session_id].append({"role": "user", "content": prompt})
+        chat_history[session_id].append({"role": "assistant", "content": response_text.strip()})  # Change 'bot' to 'assistant'
+
+        return jsonify({"reply": response_text.strip()}), 200
+
+    elif request.json and 'message' in request.json:
+        user_message = request.json['message']
+        
+        # Ensure that session_id is initialized
+        if session_id not in chat_history:
+            chat_history[session_id] = []
+        
+        # Append the new message to the chat history
+        chat_history[session_id].append({"role": "user", "content": user_message})
+
+        # Generate response using chat history
+        completion = openai.ChatCompletion.create(
+            model='gpt-3.5-turbo',
+            messages=chat_history[session_id],  # Use the entire chat history
+            request_timeout=60
+        )
+
+        bot_reply = completion.choices[0].message.content
+        chat_history[session_id].append({"role": "assistant", "content": bot_reply})  # Change 'bot' to 'assistant'
+
+        return jsonify({"reply": bot_reply}), 200
+
+    return jsonify({"error": "User prompt or PDF file is required."}), 400
+
 if __name__ == '__main__':
     app.run(debug=True)

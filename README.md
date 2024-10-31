@@ -17,6 +17,9 @@ python3.13 -m venv venv
 source venv/bin/activate
 pip install -r backend/requirements.txt
 
+
+python3.12 -m venv /home/parker/Personal_Projects/AI-Case-Competition-24/venv
+source /home/parker/Personal_Projects/AI-Case-Competition-24/venv/bin/activate
 ```
 
 Job Description

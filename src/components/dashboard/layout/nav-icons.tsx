@@ -7,7 +7,7 @@ import { Users as UsersIcon } from '@phosphor-icons/react/dist/ssr/Users';
 import { XSquare } from '@phosphor-icons/react/dist/ssr/XSquare';
 import { Briefcase } from '@phosphor-icons/react';
 import { Globe } from '@phosphor-icons/react';
-import {Question, ReadCvLogo,Crosshair,UsersFour    } from '@phosphor-icons/react';
+import {Question, ReadCvLogo,Crosshair,UsersFour,Scroll     } from '@phosphor-icons/react';
 export const navIcons = {
   'chart-pie': ChartPieIcon,
   'gear-six': GearSixIcon,
@@ -19,6 +19,7 @@ export const navIcons = {
   'paper' : ReadCvLogo ,
   'crosshair':Crosshair ,
   'interviews': UsersFour,
+  'scroll':Scroll ,
   user: UserIcon,
   users: UsersIcon,
 } as Record<string, Icon>;

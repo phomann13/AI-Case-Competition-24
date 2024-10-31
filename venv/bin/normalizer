@@ -1,4 +1,4 @@
-#!/home/phomann/Personal-Projects/CaseComp/material-kit-react/venv/bin/python3
+#!/home/parker/Personal_Projects/AI-Case-Competition-24/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys
