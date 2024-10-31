@@ -27,6 +27,7 @@ export default function Page() {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       setPdfFile(event.target.files[0]);
+      console.log(event.target.files[0])
     }
   };
 
@@ -108,6 +109,13 @@ export default function Page() {
     setNewMessage('');
   };
 
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  
+
+  const handleButtonClick = () => {
+    document.getElementById('fileInput').click();
+  };
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" sx={{ mb: 2 }}>PDF Assistant</Typography>
@@ -123,13 +131,23 @@ export default function Page() {
           />
         </Box>
         <Box sx={{ mb: 2 }}>
-          <input
-            type="file"
-            accept="application/pdf"
-            onChange={handleFileChange}
-            required
-          />
+      <input
+        id="fileInput"
+        type="file"
+        accept="application/pdf"
+        onChange={handleFileChange}
+        required
+        style={{ display: 'none' }}
+      />
+      <Button variant="contained" onClick={handleButtonClick}>
+        Upload PDF
+      </Button>
+      {pdfFile && (
+        <Box mt={1}>
+          Selected file: {pdfFile.name}
         </Box>
+      )}
+    </Box>
         <Button variant="contained" color="primary" type="submit" disabled={loading}>
           {loading ? <CircularProgress size={24} /> : 'Send Initial'}
         </Button>

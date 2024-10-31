@@ -16,8 +16,8 @@ import { List as ListIcon } from '@phosphor-icons/react/dist/ssr/List';
 import { Users as UsersIcon } from '@phosphor-icons/react/dist/ssr/Users';
 import { Chat as ChatIcon } from '@phosphor-icons/react/dist/ssr/Chat';
 
-export function MainNav(): React.JSX.Element {
-  const [openNav, setOpenNav] = React.useState<boolean>(false);
+export function MainNav(props:any): React.JSX.Element {
+  // const [openNav, setOpenNav] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<string>(''); // State for the message
   const router = useRouter(); // Router for navigation
 
@@ -49,7 +49,8 @@ export function MainNav(): React.JSX.Element {
           <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
             <IconButton
               onClick={(): void => {
-                setOpenNav(true);
+                props.setOpenNav(true);
+                console.log('Opening')
               }}
               sx={{ display: { lg: 'none' } }}
             >

@@ -11,13 +11,14 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { ArrowSquareUpRight as ArrowSquareUpRightIcon } from '@phosphor-icons/react/dist/ssr/ArrowSquareUpRight';
 import { CaretUpDown as CaretUpDownIcon } from '@phosphor-icons/react/dist/ssr/CaretUpDown';
-
+import CloseIcon from '@mui/icons-material/Close';
 import type { NavItemConfig } from '@/types/nav';
 import { paths } from '@/paths';
 import { isNavItemActive } from '@/lib/is-nav-item-active';
 import { Logo } from '@/components/core/logo';
 import { navItems } from './config';
 import { navIcons } from './nav-icons';
+import { IconButton, MenuItem, Select } from '@mui/material';
 
 export interface MobileNavProps {
   onClose?: () => void;
@@ -27,7 +28,13 @@ export interface MobileNavProps {
 
 export function MobileNav({ open, onClose, items = navItems }: MobileNavProps): React.JSX.Element {
   const pathname = usePathname();
+  const [workspace, setWorkspace] = React.useState('ASHA'); // Default value
 
+  const handleWorkspaceChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setWorkspace(event.target.value as string);
+    // Set session or perform any required action based on the selected value
+    sessionStorage.setItem('workspace', event.target.value as string);
+  };
   return (
     <Drawer
       PaperProps={{
@@ -57,43 +64,74 @@ export function MobileNav({ open, onClose, items = navItems }: MobileNavProps): 
       open={open}
     >
       <Stack spacing={2} sx={{ p: 3 }}>
+        <Stack direction = 'row' sx={{
+    justifyContent: "space-between",
+    alignItems: "center",
+  }}>
         <Box component={RouterLink} href={paths.home} sx={{ display: 'inline-flex' }}>
           <Logo color="light" height={32} width={122} />
         </Box>
-        <Box
-          sx={{
-            alignItems: 'center',
+        <Box >
+        <IconButton
+      aria-label="close"
+      onClick={onClose}
+      sx={{
+        padding: 0.5,
+        color: 'grey.700',
+        '&:hover': {
+          color: 'grey.900',
+        },
+      }}
+    >
+      <CloseIcon fontSize="small" />
+    </IconButton>
+        </Box>
+        </Stack>
+        <Select
+  sx={{
+    flex: '1 1 auto',
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'white', // Change the border color to white
+      },
+      '&:hover fieldset': {
+        borderColor: 'white', // Change the border color on hover
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'white', // Change the border color when focused
+      },
+    },
+    '& .MuiSelect-select': {
+      color: 'white', // Change the text color to white
+    },
+    alignItems: 'center',
             backgroundColor: 'var(--mui-palette-neutral-950)',
             border: '1px solid var(--mui-palette-neutral-700)',
             borderRadius: '12px',
             cursor: 'pointer',
             display: 'flex',
             p: '4px 12px',
-          }}
-        >
-          <Box sx={{ flex: '1 1 auto' }}>
-            <Typography color="var(--mui-palette-neutral-400)" variant="body2">
-              Workspace
-            </Typography>
-            <Typography color="inherit" variant="subtitle1">
-              ASHA
-            </Typography>
-          </Box>
-          <CaretUpDownIcon />
-        </Box>
-        
+  }}
+  value={workspace}
+  onChange={handleWorkspaceChange}
+  variant="outlined"
+  size="medium"
+>
+  <MenuItem value="ASHA">ASHA</MenuItem>
+  <MenuItem value="User">User</MenuItem>
+</Select>
         {/* Render navigation items */}
-        {renderNavItems({ items, pathname })}
+        {renderNavItems({ items: filterNavItems(navItems, workspace), pathname, onClose })}
       </Stack>
     </Drawer>
   );
 }
 
-function renderNavItems({ items = [], pathname }: { items?: NavItemConfig[]; pathname: string }): React.JSX.Element {
+function renderNavItems({ items = [], pathname, onClose }: { items?: NavItemConfig[]; pathname: string; onClose: any }): React.JSX.Element {
   const children = items.reduce((acc: React.ReactNode[], curr: NavItemConfig): React.ReactNode[] => {
     const { key, ...item } = curr;
 
-    acc.push(<NavItem key={key} pathname={pathname} {...item} />);
+    acc.push(<NavItem key={key} pathname={pathname} {...item} onClose={onClose} />);
 
     return acc;
   }, []);
@@ -107,12 +145,13 @@ function renderNavItems({ items = [], pathname }: { items?: NavItemConfig[]; pat
 
 interface NavItemProps extends Omit<NavItemConfig, 'items'> {
   pathname: string;
+  onClose: any;
 }
 
-function NavItem({ disabled, external, href, icon, matcher, pathname, title }: NavItemProps): React.JSX.Element {
+function NavItem({ disabled, external, href, icon, matcher, pathname, title, onClose }: NavItemProps): React.JSX.Element {
   const active = isNavItemActive({ disabled, external, href, matcher, pathname });
   const Icon = icon ? navIcons[icon] : null;
-
+  
   return (
     <li>
       <Box
@@ -122,6 +161,7 @@ function NavItem({ disabled, external, href, icon, matcher, pathname, title }: N
               href,
               target: external ? '_blank' : undefined,
               rel: external ? 'noreferrer' : undefined,
+              onClick: onClose
             }
           : { role: 'button' })}
         sx={{
@@ -164,4 +204,13 @@ function NavItem({ disabled, external, href, icon, matcher, pathname, title }: N
       </Box>
     </li>
   );
+}
+function filterNavItems(items: NavItemConfig[], workspace: string): NavItemConfig[] {
+  return items.filter(item => {
+    // Adjust logic based on your navigation structure
+    if (workspace === 'ASHA') {
+      return item.visibleTo === 'asha' || item.visibleTo === 'both';
+    }
+    return item.visibleTo === 'user' || item.visibleTo === 'both';
+  });
 }
