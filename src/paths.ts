@@ -15,7 +15,9 @@ export const paths = {
     faq: '/dashboard/faq',
     ujobPostings: '/dashboard/user/jobPostings',
     uaccount: '/dashboard/user/account',
-    myjobs: '/dashboard/user/myjobs'
+    myjobs: '/dashboard/user/myjobs',
+    predict: '/dashboard/predict',
+    interviews: '/dashboard/interviews'
   },
   errors: { notFound: '/errors/not-found' },
 } as const;
