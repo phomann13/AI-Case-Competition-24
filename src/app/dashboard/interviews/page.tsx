@@ -10,9 +10,8 @@ import {
     Box,
     Paper,
     CircularProgress,
-    LinearProgress,
 } from '@mui/material';
-import { Gauge } from '@mui/x-charts/Gauge';
+import { Gauge } from '@mui/x-charts/Gauge'; // Make sure to import the correct Gauge component
 
 const InterviewsPage = () => {
     const [resume, setResume] = useState<File | null>(null);
@@ -37,6 +36,7 @@ const InterviewsPage = () => {
             setAudioFiles(Array.from(event.target.files));
         }
     };
+
     const handleInterviewQuestionChange = (index: number, value: string) => {
         const updatedQuestions = [...interviewQuestions];
         updatedQuestions[index] = value;
@@ -51,19 +51,19 @@ const InterviewsPage = () => {
         const updatedQuestions = interviewQuestions.filter((_, i) => i !== index);
         setInterviewQuestions(updatedQuestions);
     };
+
     const handleSubmit = async () => {
         const formData = new FormData();
         formData.append('pdf_path', resume as Blob);
         formData.append('job_description', jobDescription);
-        interviewQuestions.forEach((question, index) => {
-            formData.append(`interview_questions[]`, question); // Changed to append as an array
+        interviewQuestions.forEach((question) => {
+            formData.append(`interview_questions[]`, question);
         });
-        audioFiles.forEach((audio, index) => {
-            formData.append(`audio_file_paths[]`, audio); // Changed to append as an array
+        audioFiles.forEach((audio) => {
+            formData.append(`audio_file_paths[]`, audio);
         });
-        
 
-        setLoading(true); // Start loading
+        setLoading(true);
         const response = await fetch('http://127.0.0.1:5000/evaluate', {
             method: 'POST',
             body: formData,
@@ -71,15 +71,17 @@ const InterviewsPage = () => {
 
         const data = await response.json();
         setResult(data);
-        setLoading(false); // End loading
+        setLoading(false);
     };
-    function getSubstringStartingWithWord(str: string, word: string): string | null {
+
+    const getSubstringStartingWithWord = (str: string, word: string): string | null => {
         const startIndex = str.indexOf(word);
         if (startIndex === -1) {
-            return null; // Return null if the word is not found
+            return null;
         }
-        return str.substring(startIndex); // Return the substring starting with the word
-    }
+        return str.substring(startIndex);
+    };
+
     return (
         <Container maxWidth="sm">
             <Typography variant="h4" gutterBottom>
@@ -107,9 +109,10 @@ const InterviewsPage = () => {
                     onChange={handleJobDescriptionChange}
                     margin="normal"
                 />
-                 <Typography variant="h7" marginBottom={2}>
+                <Typography variant="h7" marginBottom={2}>
                     Interview Questions
                 </Typography>
+                <br></br>
                 <br></br>
                 {interviewQuestions.map((question, index) => (
                     <Box key={index} marginBottom={2}>
@@ -157,32 +160,36 @@ const InterviewsPage = () => {
             </Paper>
 
             {loading ? (
-    <Box display="flex" justifyContent="center" alignItems="center" style={{ marginTop: '20px' }}>
-        <CircularProgress />
-    </Box>
-) : result && (
-    <Paper elevation={3} style={{ marginTop: '20px', padding: '20px' }}>
-        <Typography variant="h5">Results:</Typography>
-        <Typography variant="h6">Resume Score:</Typography>
-        <Box display="flex" justifyContent="center" alignItems="center">
-            <Gauge width={100} height={100} value={parseInt(result.resume_score)} />
-        </Box>
-        <Typography variant="h6">Interview Evaluations:</Typography>
-        <Typography>{getSubstringStartingWithWord(result.resume_score, 'Explanation')}</Typography>
-        {result.evaluations.map((evaluation: any, index: number) => (
-            <Box key={index} mb={2}>
-                <Typography variant="body1"><strong>Question:</strong> {evaluation.question}</Typography>
-                <Typography variant="body2"><strong>Transcribed Response:</strong> {evaluation.transcribed_response}</Typography>
-                <Typography variant="body2"><strong>Score:</strong> {evaluation.score}</Typography>
-            </Box>
-        ))}
-        <Typography variant="h6">Interview Questions:</Typography>
-        {interviewQuestions.map((question, index) => (
-            <Typography key={index} variant="body1">{index + 1}. {question}</Typography>
-        ))}
-    </Paper>
-)}
-
+                <Box display="flex" justifyContent="center" alignItems="center" style={{ marginTop: '20px' }}>
+                    <CircularProgress />
+                </Box>
+            ) : result && (
+                <Paper elevation={3} style={{ marginTop: '20px', padding: '20px' }}>
+                    <Typography variant="h5">Results:</Typography>
+                    <Typography variant="h6">Resume Score:</Typography>
+                    <Box display="flex" justifyContent="center" alignItems="center">
+                        <Gauge width={100} height={100} value={parseInt(result.resume_score)} />
+                    </Box>
+                    <Typography variant="h6">Resume Evaluations:</Typography>
+                    <Typography>{getSubstringStartingWithWord(result.resume_score, 'Explanation')}</Typography>
+                    <hr></hr>
+                    <Typography variant="h6">Interview Questions:</Typography>
+                    {result.evaluations.map((evaluation: any, index: number) => (
+                        <Box key={index} mb={2}>
+                            <Typography variant="body1"><strong>Question:</strong> {evaluation.question}</Typography>
+                            <Typography variant="body2"><strong>Transcribed Response:</strong> {evaluation.transcribed_response}</Typography>
+                            <Typography variant="body2"><strong>Score:</strong> </Typography>
+                            <Box display="flex" justifyContent="center" alignItems="center" style={{ marginTop: '10px' }}>
+                                <Gauge width={100} height={100} value={parseInt(evaluation.score)} />
+                            </Box>
+                            <Typography>{getSubstringStartingWithWord(evaluation.score, 'Feedback')}</Typography>
+                            
+                        </Box>
+                    ))}
+                   
+                    
+                </Paper>
+            )}
         </Container>
     );
 };

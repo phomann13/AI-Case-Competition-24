@@ -23,7 +23,6 @@ def get_jobs():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    print('HELLLLLO')
     print('--------------------------------',os.getcwd())
     pipeline = joblib.load('backend/logistic_regression_model_with_encoder.pkl')
     # Get the JSON data from the request
@@ -116,9 +115,8 @@ def evaluate():
     pdf_path = f"temp_{pdf_file.filename}"
     pdf_file.save(pdf_path)
 
-    # resume_text = extract_text_from_pdf(pdf_path)
-    # resume_score = get_resume_score(resume_text, job_description)
-    resume_score = '85/100 Explanation: He did good'
+    resume_text = extract_text_from_pdf(pdf_path)
+    resume_score = get_resume_score(resume_text, job_description)
     print('Resume score', resume_score)
     evaluations = []
     print('interview_questions', interview_questions, 'audio_file_paths', audio_file_paths)
