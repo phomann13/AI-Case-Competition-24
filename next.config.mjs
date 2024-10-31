@@ -1,4 +1,12 @@
 /** @type {import('next').NextConfig} */
-const config = {};
+// next.config.mjs
+export default {
+    experimental: {
+      serverActions: {
+        bodySizeLimit: '20mb', // Set your desired limit here
+      },
+    },
+  };
+  
 
-export default config;
+

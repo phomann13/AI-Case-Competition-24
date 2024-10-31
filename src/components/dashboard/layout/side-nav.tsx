@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { Select, MenuItem } from '@mui/material';
 import { ArrowSquareUpRight as ArrowSquareUpRightIcon } from '@phosphor-icons/react/dist/ssr/ArrowSquareUpRight';
 import { CaretUpDown as CaretUpDownIcon } from '@phosphor-icons/react/dist/ssr/CaretUpDown';
 
@@ -21,6 +22,13 @@ import { navIcons } from './nav-icons';
 
 export function SideNav(): React.JSX.Element {
   const pathname = usePathname();
+  const [workspace, setWorkspace] = React.useState('ASHA'); // Default value
+
+  const handleWorkspaceChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setWorkspace(event.target.value as string);
+    // Set session or perform any required action based on the selected value
+    sessionStorage.setItem('workspace', event.target.value as string);
+  };
 
   return (
     <Box
@@ -54,34 +62,48 @@ export function SideNav(): React.JSX.Element {
         <Box component={RouterLink} href={paths.home} sx={{ display: 'inline-flex' }}>
           <Logo color="light" height={32} width={122} />
         </Box>
-        <Box
-          sx={{
-            alignItems: 'center',
+       
+          
+          <Select
+  sx={{
+    flex: '1 1 auto',
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'white', // Change the border color to white
+      },
+      '&:hover fieldset': {
+        borderColor: 'white', // Change the border color on hover
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'white', // Change the border color when focused
+      },
+    },
+    '& .MuiSelect-select': {
+      color: 'white', // Change the text color to white
+    },
+    alignItems: 'center',
             backgroundColor: 'var(--mui-palette-neutral-950)',
             border: '1px solid var(--mui-palette-neutral-700)',
             borderRadius: '12px',
             cursor: 'pointer',
             display: 'flex',
             p: '4px 12px',
-          }}
-        >
-          <Box sx={{ flex: '1 1 auto' }}>
-            <Typography color="var(--mui-palette-neutral-400)" variant="body2">
-              Workspace
-            </Typography>
-            <Typography color="inherit" variant="subtitle1">
-              ASHA
-            </Typography>
-          </Box>
-          <CaretUpDownIcon />
-        </Box>
+  }}
+  value={workspace}
+  onChange={handleWorkspaceChange}
+  variant="outlined"
+  size="medium"
+>
+  <MenuItem value="ASHA">ASHA</MenuItem>
+  <MenuItem value="User">User</MenuItem>
+</Select>
+
       </Stack>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
       <Box component="nav" sx={{ flex: '1 1 auto', p: '12px' }}>
-        {renderNavItems({ pathname, items: navItems })}
+        {renderNavItems({ pathname, items: filterNavItems(navItems, workspace) })}
       </Box>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
-      
     </Box>
   );
 }
@@ -161,4 +183,15 @@ function NavItem({ disabled, external, href, icon, matcher, pathname, title }: N
       </Box>
     </li>
   );
+}
+
+// Filter nav items based on selected workspace
+function filterNavItems(items: NavItemConfig[], workspace: string): NavItemConfig[] {
+  return items.filter(item => {
+    // Adjust logic based on your navigation structure
+    if (workspace === 'ASHA') {
+      return item.visibleTo === 'asha' || item.visibleTo === 'both';
+    }
+    return item.visibleTo === 'user' || item.visibleTo === 'both';
+  });
 }

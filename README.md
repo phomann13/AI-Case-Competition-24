@@ -5,6 +5,8 @@
 	npm install @mui/x-charts
 	npm install @mui/icons-material --force
 	npm install openai --force
+	axios 
+	dotenv
 ```
 
 

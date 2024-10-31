@@ -1,8 +1,6 @@
-// src/app/chat/page.tsx
-// 'use client';
+'use client';
 
 import * as React from 'react';
-// import { useRouter } from 'next/navigation';
 import { Box, TextField, Button, Typography, Stack } from '@mui/material';
 
 interface Message {
@@ -11,9 +9,19 @@ interface Message {
 }
 
 export default function Chat(): React.JSX.Element {
-  // const router = useRouter();
   const [messages, setMessages] = React.useState<Message[]>([]);
   const [inputValue, setInputValue] = React.useState<string>('');
+  const [sessionId, setSessionId] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    // Load the session ID from local storage or initialize a new one
+    let storedSessionId = localStorage.getItem('sessionId');
+    if (!storedSessionId) {
+      storedSessionId = crypto.randomUUID(); // Generate new session ID
+      localStorage.setItem('sessionId', storedSessionId);
+    }
+    setSessionId(storedSessionId);
+  }, []);
 
   const handleSendMessage = async () => {
     if (inputValue.trim()) {
@@ -21,22 +29,30 @@ export default function Chat(): React.JSX.Element {
       setMessages((prev) => [...prev, userMessage]);
       setInputValue('');
 
-      // Send the user's message to the API
+      // Send the user's message to the API with session ID
       try {
         const response = await fetch('/api/chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'session-id': sessionId || '',
           },
           body: JSON.stringify({ message: inputValue }),
         });
 
-        if (!response.ok){ 
-          console.log('not ok')
-          //throw new //Error('Network response was not ok');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
+
         const data = await response.json();
-        const botMessage: Message = { sender: 'bot', text: data.message };
+
+        // If a new session ID is returned, store it in local storage and update state
+        if (data.sessionId && data.sessionId !== sessionId) {
+          localStorage.setItem('sessionId', data.sessionId);
+          setSessionId(data.sessionId);
+        }
+
+        const botMessage: Message = { sender: 'bot', text: data.reply };
         setMessages((prev) => [...prev, botMessage]);
       } catch (error) {
         console.error('Error:', error);
@@ -62,7 +78,7 @@ export default function Chat(): React.JSX.Element {
 
   return (
     <Box sx={{ padding: 3, maxWidth: '600px', margin: '0 auto' }}>
-      <Typography variant="h4" sx={{ marginBottom: 2 }}>Chat with the Bot</Typography>
+      <Typography variant="h4" sx={{ marginBottom: 2 }}>Chat with our AI Assistant!</Typography>
       <Box sx={{ border: '1px solid #ccc', borderRadius: '4px', padding: 2, height: '400px', overflowY: 'auto' }}>
         {messages.map((msg, index) => (
           <Box key={index} sx={{ marginBottom: 1, textAlign: msg.sender === 'user' ? 'right' : 'left' }}>
